@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming & Chill Discord Server</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://images-ext-2.discordapp.net/external/Efvt2ABxqLB4i5WsIHwXhehlTR1TQp_WNPiNAj7Gll4/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1197977074581901403/a_a29d0c0d92079f6dd5d995c9832c9627.gif" alt="Server Logo" class="logo">
+        </div>
+        <h1>Gaming & Chill Discord Server</h1>
+    </header>
+    <main>
+        <section class="info">
+            <div class="info-content">
+                <p>Welcome to our community for gaming, chatting, and exciting giveaways. Join us now!</p>
+                <p>We host regular gaming events, share tips and tricks, and have a friendly community waiting to welcome you.</p>
+            </div>
+        </section>
+
+        <section class="icon">
+            <img src="icon.png" alt="Icon" class="icon-img">
+        </section>
+
+        <section class="join-form">
+            <h2>Join the Giveaway</h2>
+            <form id="giveaway-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="text" placeholder="Your Discord Tag (e.g., username#1234)" required>
+                <button type="submit" class="cta-btn">Submit</button>
+            </form>
+        </section>
+
+        <section class="join-server">
+            <button class="server-btn" onclick="redirectToServer()">Join our server 🚀</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Gaming & Chill Discord Server. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function redirectToServer() {
+            window.location.href = "https://discord.com/invite/onestatenitrogiveaway";
+        }
+
+        document.getElementById("giveaway-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const name = document.querySelector("#giveaway-form input[type='text']:nth-of-type(1)").value;
+            const discordTag = document.querySelector("#giveaway-form input[type='text']:nth-of-type(2)").value;
+
+            // Send giveaway join details to Discord webhook
+            const webhookURL = "https://discord.com/api/webhooks/1218511062375206942/AXvAbLiMn2tSOOyH5LMjwsxtbHg3ZT7q2q4jkqjIkpqu5Dwj-Fq78_bqHrcZuQhqIYpL";
+            const data = {
+                "content": `New Giveaway Entry:\nName: ${name}\nDiscord Tag: ${discordTag}`
+            };
+
+            fetch(webhookURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Entry submitted successfully!");
+                    document.getElementById("giveaway-form").reset();
+                } else {
+                    alert("Failed to submit entry. Please try again later.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Failed to submit entry. Please try again later.");
+            });
+        });
+    </script>
+</body>
+</html>
